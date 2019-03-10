@@ -25,6 +25,10 @@ class RPN
     end
   end
 
+  def valid_input?(input)
+    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q'
+  end
+
   def input_zero?(input)
     input == '0'
   end
@@ -34,36 +38,42 @@ class RPN
   end
 
   def input_number?(input)
-    input.to_i > 0
-  end
-
-  def valid_input?(input)
-    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q'
+    input.to_f > 0
   end
 
   def execute_calculator(input)
     @array << 0 if input_zero?(input)
-    calculate(input) if input_operator?(input)
-    @array << input.to_i if input_number?(input)
+    attempt_calculation(input) if input_operator?(input)
+    @array << input.to_f if input_number?(input)
+  end
+
+  def enough_operands?
+    @array.count >= 2
+  end
+
+  def division_by_zero?(operator)
+    operator == '/' && @array[-1] == 0
+  end
+
+  def valid_calculation?(operator)
+    enough_operands? && !division_by_zero?(operator)
+  end
+
+  def attempt_calculation(operator)
+    puts 'Check your notation, there are not enough elements to calculate' if !enough_operands?
+    puts 'Cannot divide by zero' if division_by_zero?(operator)
+    return if !valid_calculation?(operator)
+    calculate(operator)
   end
 
   def calculate(operator)
-    if @array.count >= 2
-       @array[-2] = @array[-2] + @array[-1] if operator == '+'
-       @array[-2] = @array[-2] - @array[-1] if operator == '-'
-       @array[-2] = @array[-2] * @array[-1] if operator == '*'
-       if operator == '/'
-         if @array[-1] == 0
-           puts 'Cannot divide by zero'
-           return
-         end
-         @array[-2] = @array[-2] / @array[-1]
-       end
-       @array.pop
-       puts "=" + @array.last.to_s
-    else
-      puts 'Check your notation, there are not enough elements to calculate'
-    end
+    @array[-2] = @array[-2] + @array[-1] if operator == '+'
+    @array[-2] = @array[-2] - @array[-1] if operator == '-'
+    @array[-2] = @array[-2] * @array[-1] if operator == '*'
+    @array[-2] = @array[-2] / @array[-1] if operator == '/'
+    @array.pop
+    @array[-1] = @array[-1].to_i if @array[-1] % 1 == 0
+    puts "=" + @array.last.to_s
   end
 
   def print_array
