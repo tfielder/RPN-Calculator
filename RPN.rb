@@ -20,9 +20,9 @@ class RPN
     input = 0
     while input != 'q'
       validate_input(input = gets.chomp)
-      puts "-"
-      puts @array
-      puts "-"
+      # puts "-"
+      # puts @array
+      # puts "-"t
       #validate_operation(input, array)
     end
   end
