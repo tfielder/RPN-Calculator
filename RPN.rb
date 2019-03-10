@@ -20,9 +20,7 @@ class RPN
     input = 0
     while input != 'q'
       validate_input(input = gets.chomp)
-      # puts "-"
-      # puts @array
-      # puts "-"t
+      print_array
       #validate_operation(input, array)
     end
   end
@@ -35,11 +33,15 @@ class RPN
     input == '-' || input == '+' || input == '*' || input == '/'
   end
 
+  def input_number?(input)
+    input.to_i > 0
+  end
+
   def validate_input(input)
     @array << 0 if input_zero?(input)
     calculate(input) if input_operator?(input)
-    @array << input.to_i if input.to_i > 0
-    puts 'Try typing a number or an operator' if input.to_i == 0 && !input_operator?(input)
+    @array << input.to_i if input_number?(input)
+    puts 'Try typing a number or an operator' if !input_number?(input) && !input_operator?(input)
   end
 
   def calculate(operator)
@@ -59,6 +61,12 @@ class RPN
     else
       puts 'Check your notation, there are not enough elements to calculate'
     end
+  end
+
+  def print_array
+    puts "-"
+    puts @array
+    puts "-"
   end
 
   def farewell_message
