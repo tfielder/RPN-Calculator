@@ -76,12 +76,6 @@ class RPN
     puts "=" + @array.last.to_s
   end
 
-  def print_array
-    puts "-"
-    puts @array
-    puts "-"
-  end
-
   def farewell_message
     puts 'goodbye'
   end
