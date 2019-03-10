@@ -21,8 +21,7 @@ class RPN
     while input != 'q'
       input = gets.chomp
       execute_calculator(input) if valid_input?(input)
-      #puts 'Try typing a number or an operator' if (!input_number?(input) || !input_operator?(input))
-      print_array
+      puts 'Try typing a number or an operator' if !valid_input?(input)
     end
   end
 
@@ -39,7 +38,7 @@ class RPN
   end
 
   def valid_input?(input)
-    input_zero?(input) || input_operator?(input) || input_number?(input)
+    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q'
   end
 
   def execute_calculator(input)
