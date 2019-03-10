@@ -8,7 +8,7 @@ class RPN
 
   def main_program
     welcome_message
-    execute_calculator
+    run_loop
     farewell_message
   end
 
@@ -16,12 +16,13 @@ class RPN
     puts 'Welcome to the Reverse Polish Notation Calculator'
   end
 
-  def execute_calculator
+  def run_loop
     input = 0
     while input != 'q'
-      validate_input(input = gets.chomp)
+      input = gets.chomp
+      execute_calculator(input) if valid_input?(input)
+      #puts 'Try typing a number or an operator' if (!input_number?(input) || !input_operator?(input))
       print_array
-      #validate_operation(input, array)
     end
   end
 
@@ -37,11 +38,14 @@ class RPN
     input.to_i > 0
   end
 
-  def validate_input(input)
+  def valid_input?(input)
+    input_zero?(input) || input_operator?(input) || input_number?(input)
+  end
+
+  def execute_calculator(input)
     @array << 0 if input_zero?(input)
     calculate(input) if input_operator?(input)
     @array << input.to_i if input_number?(input)
-    puts 'Try typing a number or an operator' if !input_number?(input) && !input_operator?(input)
   end
 
   def calculate(operator)
