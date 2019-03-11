@@ -24,7 +24,12 @@ class RPN
     puts "This calculator is based on Reverse Polish Notation (RPN) where the operators follow their operands."
     puts "Type in a value and press enter to push a value to the stack."
     puts "Type in an operator '+', '-', '/', or '*' with two or more values in the stack to conduct an operation."
+    puts "To empty the stack or calculator, type 'c'."
     puts "To print the current stack, type 'p'."
+  end
+
+  def clear_calculator
+    @stack = []
   end
 
   def run_calculator
@@ -33,13 +38,14 @@ class RPN
       input = gets.chomp
       print_instructions if input == 'i'
       print_stack if input == 'p'
+      clear_calculator if input == 'c'
       execute_calculator(input) if valid_input?(input)
       puts 'Try typing a number or an operator' if !valid_input?(input)
     end
   end
 
   def valid_input?(input)
-    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q' || 'i' || 'p'
+    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q' || 'i' || 'p' || 'c'
   end
 
   def input_zero?(input)
@@ -77,11 +83,15 @@ class RPN
     puts 'Cannot divide by zero' if division_by_zero?(operator)
     return if !valid_calculation?(operator)
     calculate(operator)
+  end
+
+  def calculate(operator)
+    determine_calculation(operator)
     update_stack
     print_result
   end
 
-  def calculate(operator)
+  def determine_calculation(operator)
     @stack[-2] = @stack[-2] + @stack[-1] if operator == '+'
     @stack[-2] = @stack[-2] - @stack[-1] if operator == '-'
     @stack[-2] = @stack[-2] * @stack[-1] if operator == '*'
