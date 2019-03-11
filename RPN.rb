@@ -51,7 +51,7 @@ class RPN
   end
 
   def input_number?(input)
-    input.to_f > 0
+    input.to_f != 0
   end
 
   def execute_calculator(input)
