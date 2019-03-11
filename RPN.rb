@@ -77,6 +77,8 @@ class RPN
     puts 'Cannot divide by zero' if division_by_zero?(operator)
     return if !valid_calculation?(operator)
     calculate(operator)
+    update_stack
+    print_result
   end
 
   def calculate(operator)
@@ -84,8 +86,14 @@ class RPN
     @array[-2] = @array[-2] - @array[-1] if operator == '-'
     @array[-2] = @array[-2] * @array[-1] if operator == '*'
     @array[-2] = @array[-2] / @array[-1] if operator == '/'
+  end
+
+  def update_stack
     @array.pop
     @array[-1] = @array[-1].to_i if @array[-1] % 1 == 0
+  end
+
+  def print_result
     puts "=" + @array[-1].to_s
   end
 
