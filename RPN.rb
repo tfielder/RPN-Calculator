@@ -21,9 +21,11 @@ class RPN
   def print_instructions
     puts ""
     puts "At anytime type 'q' to quit the program, 'i' for a list of instructions."
-    puts "This calculator is based on Reverse Polish Notation (RPN) where the operators follow their operands."
+    puts "This calculator is based on Reverse Polish Notation (RPN)"
+    puts "where the operators follow their operands."
     puts "Type in a value and press enter to push a value to the stack."
-    puts "Type in an operator '+', '-', '/', or '*' with two or more values in the stack to conduct an operation."
+    puts "Type in an operator '+', '-', '/', or '*' with two or more values"
+    puts "in the stack to conduct an operation."
     puts "To empty the stack or calculator, type 'c'."
     puts "To print the current stack, type 'p'."
   end
