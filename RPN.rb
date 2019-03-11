@@ -28,7 +28,7 @@ class RPN
     puts "To print the current stack, type 'p'."
   end
 
-  def clear_calculator
+  def clear_stack
     @stack = []
   end
 
@@ -38,8 +38,9 @@ class RPN
       input = gets.chomp
       print_instructions if input == 'i'
       print_stack if input == 'p'
-      clear_calculator if input == 'c'
-      execute_calculator(input) if valid_input?(input)
+      clear_stack if input == 'c'
+      add_to_stack(input) if valid_input?(input)
+      attempt_calculation(input) if input_operator?(input)
       puts 'Try typing a number or an operator' if !valid_input?(input)
     end
   end
@@ -60,9 +61,8 @@ class RPN
     input.to_f != 0
   end
 
-  def execute_calculator(input)
+  def add_to_stack(input)
     @stack << 0 if input_zero?(input)
-    attempt_calculation(input) if input_operator?(input)
     @stack << input.to_f if input_number?(input)
   end
 
