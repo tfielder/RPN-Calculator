@@ -9,7 +9,7 @@ class RPN
   def main_program
     welcome_message
     print_instructions
-    run_loop
+    run_calculator
     farewell_message
   end
 
@@ -27,7 +27,7 @@ class RPN
     puts "To print the current stack, type 'p'."
   end
 
-  def run_loop
+  def run_calculator
     input = 0
     while input != 'q'
       input = gets.chomp
