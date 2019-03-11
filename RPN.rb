@@ -1,8 +1,8 @@
 class RPN
-  attr_accessor :array
+  attr_accessor :stack
 
   def initialize
-    @array = []
+    @stack = []
     main_program
   end
 
@@ -55,17 +55,17 @@ class RPN
   end
 
   def execute_calculator(input)
-    @array << 0 if input_zero?(input)
+    @stack << 0 if input_zero?(input)
     attempt_calculation(input) if input_operator?(input)
-    @array << input.to_f if input_number?(input)
+    @stack << input.to_f if input_number?(input)
   end
 
   def enough_operands?
-    @array.count >= 2
+    @stack.count >= 2
   end
 
   def division_by_zero?(operator)
-    operator == '/' && @array[-1] == 0
+    operator == '/' && @stack[-1] == 0
   end
 
   def valid_calculation?(operator)
@@ -82,24 +82,24 @@ class RPN
   end
 
   def calculate(operator)
-    @array[-2] = @array[-2] + @array[-1] if operator == '+'
-    @array[-2] = @array[-2] - @array[-1] if operator == '-'
-    @array[-2] = @array[-2] * @array[-1] if operator == '*'
-    @array[-2] = @array[-2] / @array[-1] if operator == '/'
+    @stack[-2] = @stack[-2] + @stack[-1] if operator == '+'
+    @stack[-2] = @stack[-2] - @stack[-1] if operator == '-'
+    @stack[-2] = @stack[-2] * @stack[-1] if operator == '*'
+    @stack[-2] = @stack[-2] / @stack[-1] if operator == '/'
   end
 
   def update_stack
-    @array.pop
-    @array[-1] = @array[-1].to_i if @array[-1] % 1 == 0
+    @stack.pop
+    @stack[-1] = @stack[-1].to_i if @stack[-1] % 1 == 0
   end
 
   def print_result
-    puts "=" + @array[-1].to_s
+    puts "=" + @stack[-1].to_s
   end
 
   def print_stack
     puts ''
-    print @array
+    print @stack
     puts ''
   end
 
