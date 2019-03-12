@@ -6,6 +6,7 @@
 * Version: 1.0
 * Ruby Version: 2.4.1
 
+
 ## To run:
 1. Go to https://github.com/tfielder/RPN-Calculator.
 2. From your command line (on a linux based-system) and the directory of your choice run `git clone https://github.com/tfielder/RPN-Calculator.git`.

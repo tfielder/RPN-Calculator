@@ -1,15 +1,15 @@
 class RPN
-  attr_accessor :array
+  attr_accessor :stack
 
   def initialize
-    @array = []
+    @stack = []
     main_program
   end
 
   def main_program
     welcome_message
     print_instructions
-    run_loop
+    run_calculator
     farewell_message
   end
 
@@ -21,25 +21,34 @@ class RPN
   def print_instructions
     puts ""
     puts "At anytime type 'q' to quit the program, 'i' for a list of instructions."
-    puts "This calculator is based on Reverse Polish Notation (RPN) where the operators follow their operands."
+    puts "This calculator is based on Reverse Polish Notation (RPN)"
+    puts "where the operators follow their operands."
     puts "Type in a value and press enter to push a value to the stack."
-    puts "Type in an operator '+', '-', '/', or '*' with two or more values in the stack to conduct an operation."
+    puts "Type in an operator '+', '-', '/', or '*' with two or more values"
+    puts "in the stack to conduct an operation."
+    puts "To empty the stack or calculator, type 'c'."
     puts "To print the current stack, type 'p'."
   end
 
-  def run_loop
+  def clear_stack
+    @stack = []
+  end
+
+  def run_calculator
     input = 0
     while input != 'q'
       input = gets.chomp
       print_instructions if input == 'i'
       print_stack if input == 'p'
-      execute_calculator(input) if valid_input?(input)
+      clear_stack if input == 'c'
+      add_to_stack(input) if valid_input?(input)
+      attempt_calculation(input) if input_operator?(input)
       puts 'Try typing a number or an operator' if !valid_input?(input)
     end
   end
 
   def valid_input?(input)
-    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q' || 'i' || 'p'
+    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q' || 'i' || 'p' || 'c'
   end
 
   def input_zero?(input)
@@ -51,21 +60,20 @@ class RPN
   end
 
   def input_number?(input)
-    input.to_f > 0
+    input.to_f != 0
   end
 
-  def execute_calculator(input)
-    @array << 0 if input_zero?(input)
-    attempt_calculation(input) if input_operator?(input)
-    @array << input.to_f if input_number?(input)
+  def add_to_stack(input)
+    @stack << 0 if input_zero?(input)
+    @stack << input.to_f if input_number?(input)
   end
 
   def enough_operands?
-    @array.count >= 2
+    @stack.count >= 2
   end
 
   def division_by_zero?(operator)
-    operator == '/' && @array[-1] == 0
+    operator == '/' && @stack[-1] == 0
   end
 
   def valid_calculation?(operator)
@@ -80,18 +88,30 @@ class RPN
   end
 
   def calculate(operator)
-    @array[-2] = @array[-2] + @array[-1] if operator == '+'
-    @array[-2] = @array[-2] - @array[-1] if operator == '-'
-    @array[-2] = @array[-2] * @array[-1] if operator == '*'
-    @array[-2] = @array[-2] / @array[-1] if operator == '/'
-    @array.pop
-    @array[-1] = @array[-1].to_i if @array[-1] % 1 == 0
-    puts "=" + @array[-1].to_s
+    determine_calculation(operator)
+    update_stack
+    print_result
+  end
+
+  def determine_calculation(operator)
+    @stack[-2] = @stack[-2] + @stack[-1] if operator == '+'
+    @stack[-2] = @stack[-2] - @stack[-1] if operator == '-'
+    @stack[-2] = @stack[-2] * @stack[-1] if operator == '*'
+    @stack[-2] = @stack[-2] / @stack[-1] if operator == '/'
+  end
+
+  def update_stack
+    @stack.pop
+    @stack[-1] = @stack[-1].to_i if @stack[-1] % 1 == 0
+  end
+
+  def print_result
+    puts "=" + @stack[-1].to_s
   end
 
   def print_stack
     puts ''
-    print @array
+    print @stack
     puts ''
   end
 
