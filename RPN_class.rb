@@ -3,7 +3,6 @@ class RPN
 
   def initialize
     @stack = []
-    main_program
   end
 
   def main_program
@@ -48,7 +47,7 @@ class RPN
   end
 
   def valid_input?(input)
-    input_zero?(input) || input_operator?(input) || input_number?(input) || 'q' || 'i' || 'p' || 'c'
+    input_zero?(input) || input_operator?(input) || input_number?(input) #|| 'q' || 'i' || 'p' || 'c'
   end
 
   def input_zero?(input)
