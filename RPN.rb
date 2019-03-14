@@ -1,3 +1,4 @@
 require_relative 'RPN_class'
 
-RPN.new
+rpn = RPN.new
+rpn.main_program
