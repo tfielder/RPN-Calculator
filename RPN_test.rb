@@ -193,9 +193,4 @@ class RPNTest < Minitest::Test
     assert_equal 1, @rpn.stack.count
     assert_equal 9, @rpn.stack[-1]
   end
-
-  def test_it_
-    skip
-    assert_equal exp, act
-  end
 end
