@@ -141,6 +141,23 @@ class RPNTest < Minitest::Test
     assert_equal false, case4
   end
 
+  def test_valid_calculation
+    @rpn.add_to_stack("0")
+    case1 = @rpn.valid_calculation?("+")
+    case2 = @rpn.valid_calculation?("/")
+
+    assert_equal false, case1
+    assert_equal false, case2
+
+    @rpn.add_to_stack("1")
+    case3 = @rpn.valid_calculation?("/")
+    assert_equal true, case3
+
+    @rpn.add_to_stack("0")
+    case4 = @rpn.valid_calculation?("/")
+    assert_equal false, case4
+  end
+
   def test_it_
     skip
     assert_equal exp, act
