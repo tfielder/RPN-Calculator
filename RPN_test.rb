@@ -83,9 +83,13 @@ class RPNTest < Minitest::Test
     input6 = @rpn.valid_input?("1")
     input7 = @rpn.valid_input?("1.1")
     input8 = @rpn.valid_input?("-1")
+    input9 = @rpn.valid_input?("-1")
+    input10 = @rpn.valid_input?("-1")
+    input11 = @rpn.valid_input?("-1")
+    input12 = @rpn.valid_input?("-1")
 
-    input9 = @rpn.valid_input?("yes")
-    input10 = @rpn.valid_input?("%@*i")
+    input13 = @rpn.valid_input?("yes")
+    input14 = @rpn.valid_input?("%@*i")
 
     assert_equal true, input1
     assert_equal true, input2
@@ -95,9 +99,13 @@ class RPNTest < Minitest::Test
     assert_equal true, input6
     assert_equal true, input7
     assert_equal true, input8
+    assert_equal true, input9
+    assert_equal true, input10
+    assert_equal true, input11
+    assert_equal true, input12
 
-    assert_equal false, input9
-    assert_equal false, input10
+    assert_equal false, input13
+    assert_equal false, input14
   end
 
   def test_it_
