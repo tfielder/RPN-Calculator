@@ -12,12 +12,6 @@ class RPNTest < Minitest::Test
     assert @rpn
   end
 
-  def test_it_has_welcome_message
-    skip
-    welcome = @rpn.welcome_message
-    assert_equal welcome, "Welcome to the Reverse Polish Notation Calculator"
-  end
-
   def test_it_has_empty_stack
     assert_equal [], @rpn.stack
   end
