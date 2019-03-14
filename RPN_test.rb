@@ -108,9 +108,37 @@ class RPNTest < Minitest::Test
     assert_equal false, input14
   end
 
-  def test_it_
-    skip
-    assert_equal exp, act
+  def test_it_adds_to_the_stack
+    assert_equal 0, @rpn.stack.count
+    @rpn.add_to_stack("0")
+    assert_equal 1, @rpn.stack.count
+    @rpn.add_to_stack("-10.1")
+    assert_equal 2, @rpn.stack.count
+    @rpn.add_to_stack("holy_cow")
+    assert_equal 2, @rpn.stack.count
+  end
+
+  def test_it_has_enough_operands
+    assert_equal false, @rpn.enough_operands?
+    @rpn.add_to_stack("0")
+    assert_equal false, @rpn.enough_operands?
+    @rpn.add_to_stack("1")
+    assert_equal true, @rpn.enough_operands?
+  end
+
+  def test_it_asks_division_by_zero
+    @rpn.add_to_stack("0")
+    @rpn.add_to_stack("1")
+    case1 = @rpn.division_by_zero?("/")
+    case2 = @rpn.division_by_zero?("+")
+    assert_equal false, case1
+    assert_equal false, case2
+
+    @rpn.add_to_stack("0")
+    case3 = @rpn.division_by_zero?("/")
+    case4 = @rpn.division_by_zero?("+")
+    assert_equal true, case3
+    assert_equal false, case4
   end
 
   def test_it_
