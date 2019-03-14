@@ -15,6 +15,9 @@
 5. Run `ruby RPN.rb`.
 6. Enjoy the calculator.
 
+## Testing:
+Once you've completed the above steps to run the program, try running `cd RPN_test.rb` to use the test-suite. Tests are included in the RPN_test.rb file.
+
 ## Assumptions and Decisions:
 This project assumes using the Ruby language and version 2.4 or higher.
 The program should notify the user if an invalid input is provided.
