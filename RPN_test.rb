@@ -158,6 +158,42 @@ class RPNTest < Minitest::Test
     assert_equal false, case4
   end
 
+  def test_determine_calculation
+    @rpn.add_to_stack("2")
+    @rpn.add_to_stack("2")
+    @rpn.determine_calculation("+")
+    assert_equal 4, @rpn.stack[-2]
+    assert_equal 2, @rpn.stack[-1]
+
+    @rpn.add_to_stack("2")
+    @rpn.add_to_stack("2")
+    @rpn.determine_calculation("-")
+    assert_equal 0, @rpn.stack[-2]
+    assert_equal 2, @rpn.stack[-1]
+
+    @rpn.add_to_stack("3")
+    @rpn.add_to_stack("3")
+    @rpn.determine_calculation("*")
+    assert_equal 9, @rpn.stack[-2]
+    assert_equal 3, @rpn.stack[-1]
+
+    @rpn.add_to_stack("9")
+    @rpn.add_to_stack("3")
+    @rpn.determine_calculation("/")
+    assert_equal 3, @rpn.stack[-2]
+    assert_equal 3, @rpn.stack[-1]
+  end
+
+  def test_it_updates_stack
+    @rpn.add_to_stack("9")
+    @rpn.add_to_stack("3")
+    assert_equal 9, @rpn.stack[-2]
+    assert_equal 3, @rpn.stack[-1]
+    @rpn.update_stack
+    assert_equal 1, @rpn.stack.count
+    assert_equal 9, @rpn.stack[-1]
+  end
+
   def test_it_
     skip
     assert_equal exp, act
