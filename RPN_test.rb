@@ -57,7 +57,6 @@ class RPNTest < Minitest::Test
     input7 = @rpn.input_number?("0")
     input8 = @rpn.input_number?("+")
 
-
     assert_equal true, input1
     assert_equal true, input2
     assert_equal true, input3
